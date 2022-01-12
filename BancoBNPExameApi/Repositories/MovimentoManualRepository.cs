@@ -33,6 +33,46 @@ namespace BancoBNPExameApi.Repositories
             _context.SaveChanges();
         }
 
+        public void Update(MovimentoManual movimentoManual)
+        {
+            MovimentoManual mm = (from x in _context.MovimentoManuals
+                        where x.COD_COSIF == movimentoManual.COD_COSIF 
+                            && x.COD_PRODUTO == movimentoManual.COD_PRODUTO
+                            && x.DAT_MES == movimentoManual.DAT_MES
+                            && x.DAT_ANO == movimentoManual.DAT_ANO
+                            && x.NUM_LANCAMENTO == movimentoManual.NUM_LANCAMENTO
+                        select x).First();
+
+            if(mm != null) { 
+                mm.DES_DESCRICAO = movimentoManual.DES_DESCRICAO;
+                mm.VAL_VALOR = movimentoManual.VAL_VALOR;
+
+                _context.SaveChanges();
+            }
+
+            
+
+        }
+
+        public void Delete(MovimentoManual movimentoManual)
+        {
+
+            _context.MovimentoManuals.Remove(
+                    _context.MovimentoManuals
+                    .Where(x => x.COD_COSIF == movimentoManual.COD_COSIF
+                            && x.COD_PRODUTO == movimentoManual.COD_PRODUTO
+                            && x.DAT_MES == movimentoManual.DAT_MES
+                            && x.DAT_ANO == movimentoManual.DAT_ANO
+                            && x.NUM_LANCAMENTO == movimentoManual.NUM_LANCAMENTO)
+                    .First()
+                );
+
+            _context.SaveChanges();
+
+        }
+
+
+
         public IEnumerable<MovimentoManual> ObterTodos()
         {
             return _context.MovimentoManuals.ToList();

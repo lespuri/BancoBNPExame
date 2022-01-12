@@ -11,6 +11,12 @@ namespace BancoBNPExameApi.Repositories.Interface
     {
         void Create(MovimentoManual movimentoManual);
 
+        void Update(MovimentoManual movimentoManual);
+
+        void Delete(MovimentoManual movimentoManual);
+
         IEnumerable<MovimentoManual> ObterTodos();
+
+        IEnumerable<MovimentoManual> ObterPorMesAno(int prMes, int prAno);
     }
 }
