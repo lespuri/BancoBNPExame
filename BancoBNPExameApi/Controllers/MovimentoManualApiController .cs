@@ -36,21 +36,21 @@ namespace BancoBNPExameApi.Controllers
             return _repositoryMovimentoManual.ObterPorMesAno(mes, ano);
         }
 
-        // POST api/values
+        // POST api/v1/MovimentoManual
         [Route("")]
         public void Post([FromBody] MovimentoManual movimentoManual)
         {
             _repositoryMovimentoManual.Create(movimentoManual);
         }
 
-        // PUT api/values/5
+        // PUT api/v1/MovimentoManual
         [Route("")]
         public void Put([FromBody] MovimentoManual movimentoManual)
         {
             _repositoryMovimentoManual.Update(movimentoManual);
         }
 
-        // DELETE api/values/5
+        // DELETE api/v1/MovimentoManual
         [Route("")]
         public void Delete([FromBody] MovimentoManual movimentoManual)
         {
