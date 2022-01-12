@@ -1,0 +1,171 @@
+﻿@model BancoBNPExameApi.Models.MovimentoManualViewModel
+
+@{
+    ViewBag.Title = "Movimento Manual";
+}
+<h2>Movimento Manual</h2>
+@using (Html.BeginForm("Create", "MovimentoManuals", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.DAT_MES, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MovimentoManualVM.DAT_MES, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.DAT_MES, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.DAT_ANO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MovimentoManualVM.DAT_ANO, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.DAT_ANO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.COD_PRODUTO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MovimentoManualVM.COD_PRODUTO, (IEnumerable<SelectListItem>)ViewBag.itemsProdutos, new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.COD_PRODUTO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.COD_COSIF, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MovimentoManualVM.COD_COSIF, (IEnumerable<SelectListItem>)ViewBag.itemsProdutoCosifs, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.COD_COSIF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.DES_DESCRICAO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MovimentoManualVM.DES_DESCRICAO, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.DES_DESCRICAO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MovimentoManualVM.VAL_VALOR, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MovimentoManualVM.VAL_VALOR, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MovimentoManualVM.VAL_VALOR, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <div class="col-md-offset-2 col-md-10" >
+                <input type="button" value="Limpar" class="btn btn-primary" onclick="javascript:Limpar()" />
+                <input type="button" value="Novo" class="btn btn-primary" onclick="javascript:Novo()" />
+                <input type="submit" value="Incluir" class="btn btn-primary" />                
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.DAT_MES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.DAT_ANO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.COD_PRODUTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.Produtos.DES_PRODUTO)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.NUM_LANCAMENTO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.DES_DESCRICAO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimentoManualVM.VAL_VALOR)
+        </th>
+        
+    </tr>
+
+    @foreach (var item in Model.MovimentoManualVMs)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DAT_MES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DAT_ANO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.COD_PRODUTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produtos.DES_PRODUTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NUM_LANCAMENTO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DES_DESCRICAO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VAL_VALOR)
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+<script>
+    // self executing function here
+    $(document).ready(function () {
+
+        Limpar();
+        BloquearCampos();
+    })
+
+    function BloquearCampos() {
+        $("#MovimentoManualVM_DAT_MES").attr("readonly", "readonly");
+        $("#MovimentoManualVM_DAT_ANO").attr("readonly", "readonly");
+        $("#MovimentoManualVM_COD_PRODUTO").attr("readonly", "readonly");
+        $("#MovimentoManualVM_COD_COSIF").attr("readonly", "readonly");
+        $("#MovimentoManualVM_DES_DESCRICAO").attr("readonly", "readonly");
+        $("#MovimentoManualVM_VAL_VALOR").attr("readonly", "readonly");                
+
+    }
+
+    function Novo() {
+
+        $("#MovimentoManualVM_DAT_MES").removeAttr("readonly");
+        $("#MovimentoManualVM_DAT_ANO").removeAttr("readonly");
+        $("#MovimentoManualVM_COD_PRODUTO").removeAttr("readonly");
+        $("#MovimentoManualVM_COD_COSIF").removeAttr("readonly");
+        $("#MovimentoManualVM_DES_DESCRICAO").removeAttr("readonly");
+        $("#MovimentoManualVM_VAL_VALOR").removeAttr("readonly");
+    }
+
+    function Limpar() {
+
+        $("#MovimentoManualVM_DAT_MES").val("");
+        $("#MovimentoManualVM_DAT_ANO").val("");
+        $("#MovimentoManualVM_COD_PRODUTO").val("");
+        $("#MovimentoManualVM_COD_COSIF").val("");
+        $("#MovimentoManualVM_DES_DESCRICAO").val("");
+        $("#MovimentoManualVM_VAL_VALOR").val("");
+
+        BloquearCampos();
+    }
+
+</script>
